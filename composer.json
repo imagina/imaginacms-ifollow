@@ -1,5 +1,5 @@
 {
-    "name": "imagina/ifollow",
+    "name": "imagina/ifollow-module",
     "description": "",
     "type": "asgard-module",
     "license": "MIT",
@@ -32,6 +32,9 @@
             "aliases": {
 
             }
+        },
+        "branch-alias": {
+            "dev-v8.x": "8.0.x-dev"
         }
     },
     "autoload": {
