@@ -1,0 +1,16 @@
+{
+    "name": "Ifollow",
+    "alias": "ifollow",
+    "version": "1.0.0",
+	"description": "",
+    "keywords": [],
+    "priority": 1,
+    "providers": [
+        "Modules\\Ifollow\\Providers\\IfollowServiceProvider",
+        "Modules\\Ifollow\\Providers\\EventServiceProvider",
+        "Modules\\Ifollow\\Providers\\RouteServiceProvider"
+    ],
+    "aliases": {},
+    "files": [],
+    "requires": []
+}
