@@ -49,7 +49,7 @@ class IfollowServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($this->getModuleConfigFilePath('ifollow', 'settings-fields'), "asgard.ifollow.settings-fields");
         $this->mergeConfigFrom($this->getModuleConfigFilePath('ifollow', 'permissions'), "asgard.ifollow.permissions");
 
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        //$this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
 
         $this->registerComponents();
         $this->registerComponentsLivewire();
