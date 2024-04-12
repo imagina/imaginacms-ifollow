@@ -14,7 +14,6 @@ class IfollowDatabaseSeeder extends Seeder
     {
         Model::unguard();
 
-        $this->call(IfollowModuleTableSeeder::class);
         // $this->call("OthersTableSeeder");
     }
 }
