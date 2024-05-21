@@ -6,52 +6,49 @@ use Illuminate\View\Component;
 
 class Followers extends Component
 {
-    private $followableId;
+  private $followableId;
+  private $followableType;
+  public $totalFollowers;
+  public $followerLabel;
 
-    private $followableType;
+  /**
+   * Create a new component instance.
+   *
+   * @return void
+   */
+  public function __construct($followableId, $followableType)
+  {
+    $this->followableId = $followableId;
+    $this->followableType = $followableType;
 
-    public $totalFollowers;
+    $this->getFollowers();
+  }
 
-    public $followerLabel;
+  private function getFollowers()
+  {
+    $repository = app("Modules\Ifollow\Repositories\FollowerRepository");
 
-    /**
-     * Create a new component instance.
-     *
-     * @return void
-     */
-    public function __construct($followableId, $followableType)
-    {
-        $this->followableId = $followableId;
-        $this->followableType = $followableType;
+    $params = [
+      'filter' => [
+        'followableId' => $this->followableId,
+        'followableType' => $this->followableType,
+      ],
+    ];
 
-        $this->getFollowers();
-    }
+    $followers = $repository->getItemsBy(json_decode(json_encode($params)));
 
-     private function getFollowers()
-     {
-         $repository = app("Modules\Ifollow\Repositories\FollowerRepository");
+    $this->totalFollowers = $followers->count();
 
-         $params = [
-             'filter' => [
-                 'followableId' => $this->followableId,
-                 'followableType' => $this->followableType,
-             ],
-         ];
+    $this->followerLabel = 'ifollow::followers.followers' . ($this->totalFollowers == 1 ? '' : 's');
+  }
 
-         $followers = $repository->getItemsBy(json_decode(json_encode($params)));
-
-         $this->totalFollowers = $followers->count();
-
-         $this->followerLabel = 'ifollow::followers.followers'.($this->totalFollowers == 1 ? '' : 's');
-     }
-
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\View\View|string
-     */
-    public function render()
-    {
-        return view('ifollow::frontend.components.followers');
-    }
+  /**
+   * Get the view / contents that represent the component.
+   *
+   * @return \Illuminate\View\View|string
+   */
+  public function render()
+  {
+    return view('ifollow::frontend.components.followers');
+  }
 }

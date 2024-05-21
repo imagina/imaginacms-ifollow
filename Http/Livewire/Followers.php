@@ -6,49 +6,45 @@ use Livewire\Component;
 
 class Followers extends Component
 {
-    public $followableId;
+  public $followableId;
+  public $followableType;
+  public $totalFollowers;
+  public $followerLabel;
+  protected $listeners = ['updateFollowers' => 'getFollowers'];
 
-    public $followableType;
+  public function mount($followableId, $followableType)
+  {
+    $this->followableId = $followableId;
+    $this->followableType = $followableType;
+    $this->getFollowers();
+  }
 
-    public $totalFollowers;
+  public function getFollowers()
+  {
+    $repository = app("Modules\Ifollow\Repositories\FollowerRepository");
 
-    public $followerLabel;
+    $params = [
+      'filter' => [
+        'followableId' => $this->followableId,
+        'followableType' => $this->followableType,
+      ],
+    ];
 
-    protected $listeners = ['updateFollowers' => 'getFollowers'];
+    $followers = $repository->getItemsBy(json_decode(json_encode($params)));
 
-    public function mount($followableId, $followableType)
-    {
-        $this->followableId = $followableId;
-        $this->followableType = $followableType;
-        $this->getFollowers();
-    }
+    $this->totalFollowers = $followers->count();
 
-    public function getFollowers()
-    {
-        $repository = app("Modules\Ifollow\Repositories\FollowerRepository");
+    $this->followerLabel = 'Seguidor' . ($this->totalFollowers == 1 ? '' : 'es');
+  }
 
-        $params = [
-            'filter' => [
-                'followableId' => $this->followableId,
-                'followableType' => $this->followableType,
-            ],
-        ];
+  /*
+  * Render
+  * return view
+  */
+  public function render()
+  {
+    $view = 'ifollow::frontend.livewire.followersCount';
 
-        $followers = $repository->getItemsBy(json_decode(json_encode($params)));
-
-        $this->totalFollowers = $followers->count();
-
-        $this->followerLabel = 'Seguidor'.($this->totalFollowers == 1 ? '' : 'es');
-    }
-
-    /*
-    * Render
-    * return view
-    */
-    public function render()
-    {
-        $view = 'ifollow::frontend.livewire.followersCount';
-
-        return view($view);
-    }
+    return view($view);
+  }
 }
