@@ -49,6 +49,7 @@ class Follower extends CrudModel
         $result = $followerService->getEmailsAndBroadcast($this);
 
         $userId = \Auth::id() ?? null;
+        $source = "ifollow";
 
         return [
             'created' => [
@@ -56,7 +57,8 @@ class Follower extends CrudModel
                 "message" =>  trans("ifollow::common.follow.created.message",['user' => $result['createdByUser']]),
                 "email" => $result['email'],
                 "broadcast" => $result['broadcast'],
-                "userId" => $userId
+                "userId" => $userId,
+                "source" => $source
 
             ],
             'deleted' => [
@@ -64,7 +66,8 @@ class Follower extends CrudModel
                 "message" =>  trans("ifollow::common.follow.deleted.message",['user' => $result['createdByUser']]),
                 "email" => $result['email'],
                 "broadcast" => $result['broadcast'],
-                "userId" => $userId
+                "userId" => $userId,
+                "source" => $source
             ],
         ];
 
