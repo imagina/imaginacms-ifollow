@@ -4,11 +4,9 @@ namespace Modules\Ifollow\Http\Livewire;
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
-use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Follow extends Component
 {
-  use LivewireAlert;
   /**
    * Attributes
    */
@@ -83,7 +81,7 @@ class Follow extends Component
     ];
     $repository->create($data);
     $this->isFollowing = true;
-    $this->dispatch('updateFollowers');
+    $this->emit('updateFollowers');
   }
 
   //Delete following
@@ -104,7 +102,7 @@ class Follow extends Component
     ];
     $repository->deleteBy($this->followableId, json_decode(json_encode($params)));
     $this->isFollowing = false;
-    $this->dispatch('updateFollowers');
+    $this->emit('updateFollowers');
   }
 
   /*
