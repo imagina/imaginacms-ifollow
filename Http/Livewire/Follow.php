@@ -4,9 +4,11 @@ namespace Modules\Ifollow\Http\Livewire;
 
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use Jantinnerezo\LivewireAlert\LivewireAlert;
 
 class Follow extends Component
 {
+  use LivewireAlert;
   /**
    * Attributes
    */
